@@ -19,6 +19,11 @@ interface ResponseOption {
 
 export const ConversationalAssessment: React.FC = () => {
   const navigate = useNavigate();
+
+  // Ensure page starts at top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
   const [playerName, setPlayerName] = useState('');
   const [isResearching, setIsResearching] = useState(false);
   const [playerData, setPlayerData] = useState<PlayerResearchData | null>(null);

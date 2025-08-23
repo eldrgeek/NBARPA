@@ -1,0 +1,132 @@
+{
+  "tourSteps": [
+    {
+      "id": "home-retired",
+      "title": "Retired Player Journey",
+      "path": "/",
+      "duration": 2000,
+      "showCard": "retired",
+      "scrollActions": []
+    },
+    {
+      "id": "retired",
+      "title": "Retired Player Journey",
+      "path": "/welcome",
+      "duration": 4000,
+      "scrollActions": [
+        {
+          "delay": 1000,
+          "scrollTo": 300,
+          "smooth": true
+        },
+        {
+          "delay": 2500,
+          "scrollTo": 600,
+          "smooth": true
+        }
+      ]
+    },
+    {
+      "id": "home-family",
+      "title": "Family Member Journey",
+      "path": "/",
+      "duration": 2000,
+      "showCard": "family",
+      "scrollActions": []
+    },
+    {
+      "id": "family",
+      "title": "Family Member Journey",
+      "path": "/family",
+      "duration": 4000,
+      "scrollActions": [
+        {
+          "delay": 1000,
+          "scrollTo": 400,
+          "smooth": true
+        }
+      ]
+    },
+    {
+      "id": "home-fan",
+      "title": "Fan & Supporter Journey",
+      "path": "/",
+      "duration": 2000,
+      "showCard": "fan",
+      "scrollActions": []
+    },
+    {
+      "id": "fan",
+      "title": "Fan & Supporter Journey",
+      "path": "/fan",
+      "duration": 3500,
+      "scrollActions": [
+        {
+          "delay": 1500,
+          "scrollTo": 500,
+          "smooth": true
+        }
+      ]
+    },
+    {
+      "id": "home-business",
+      "title": "Business Partner Journey",
+      "path": "/",
+      "duration": 2000,
+      "showCard": "business",
+      "scrollActions": []
+    },
+    {
+      "id": "business",
+      "title": "Business Partner Journey",
+      "path": "/business",
+      "duration": 4000,
+      "scrollActions": [
+        {
+          "delay": 1000,
+          "scrollTo": 300,
+          "smooth": true
+        },
+        {
+          "delay": 2500,
+          "scrollTo": 700,
+          "smooth": true
+        }
+      ]
+    },
+    {
+      "id": "home-active",
+      "title": "Active Player Journey",
+      "path": "/",
+      "duration": 2000,
+      "showCard": "active",
+      "scrollActions": []
+    },
+    {
+      "id": "active",
+      "title": "Active Player Journey",
+      "path": "/active-player",
+      "duration": 4000,
+      "scrollActions": [
+        {
+          "delay": 2000,
+          "scrollTo": 400,
+          "smooth": true
+        }
+      ]
+    },
+    {
+      "id": "tour-complete",
+      "title": "Tour Complete",
+      "path": "/",
+      "duration": 2000,
+      "scrollActions": [
+        {
+          "delay": 500,
+          "scrollTo": 0,
+          "smooth": true
+        }
+      ]
+    }
+  ]
+}

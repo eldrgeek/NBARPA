@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ShoppingBasket as Basketball, CheckCircle, Circle, FileText, Users, TrendingUp, Calendar, ArrowRight, ExternalLink, Bot, MessageSquare } from 'lucide-react';
@@ -44,6 +44,11 @@ const steps = [
 
 export const WelcomePage: React.FC = () => {
   const navigate = useNavigate();
+
+  // Ensure page starts at top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
 
   return (
     <div className="min-h-screen p-4 md:p-8">

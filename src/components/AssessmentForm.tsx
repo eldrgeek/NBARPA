@@ -34,6 +34,11 @@ const supportOptions = [
 
 export const AssessmentForm: React.FC = () => {
   const navigate = useNavigate();
+
+  // Ensure page starts at top when component mounts
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, []);
   const [currentStep, setCurrentStep] = useState(0);
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
   const [formData, setFormData] = useState<FormData>({
