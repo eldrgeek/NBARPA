@@ -224,7 +224,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       </nav>
 
       {/* Mobile Navigation */}
-      <nav className="lg:hidden flex items-center justify-between p-4 bg-gradient-to-r from-purple-900/95 via-purple-800/95 to-orange-600/95 backdrop-blur-lg border-b border-white/20 shadow-lg">
+      <nav className="lg:hidden sticky top-0 z-40 flex items-center justify-between p-4 bg-gradient-to-r from-purple-900/95 via-purple-800/95 to-orange-600/95 backdrop-blur-lg border-b border-white/20 shadow-lg">
         <div 
           onClick={() => handleNavigation('/')}
           className="flex items-center gap-2 cursor-pointer"
@@ -235,12 +235,22 @@ export const Navigation: React.FC<NavigationProps> = ({
           <span className="text-white font-semibold">Connect</span>
         </div>
 
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="w-10 h-10 rounded-lg bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors border border-white/20"
-        >
-          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        <div className="flex items-center gap-2">
+          {!isLoggedIn && (
+            <button
+              onClick={onLogin}
+              className="px-3 py-1.5 bg-orange-500 hover:bg-orange-600 text-white text-sm rounded-lg font-medium transition-colors"
+            >
+              Login
+            </button>
+          )}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="w-10 h-10 rounded-lg bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-colors border border-white/20"
+          >
+            {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu */}
