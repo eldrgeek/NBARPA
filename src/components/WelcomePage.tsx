@@ -91,44 +91,45 @@ export const WelcomePage: React.FC = () => {
           transition={{ delay: 0.1 }}
           className="bg-white/10 backdrop-blur-lg rounded-2xl p-6 mb-8 border border-white/20"
         >
-          <h2 className="text-xl font-semibold text-white mb-4 text-center">Choose Your Assessment Style</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => navigate('/conversational-assessment')}
-              className="p-6 bg-gradient-to-r from-orange-500/20 to-orange-600/20 border border-orange-400/30 rounded-xl text-left hover:from-orange-500/30 hover:to-orange-600/30 transition-all"
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <Bot className="w-6 h-6 text-orange-400" />
-                <h3 className="text-lg font-semibold text-white">AI Conversation</h3>
-              </div>
-              <p className="text-white/80 text-sm mb-3">
-                Have a natural conversation with our AI coach who will research your background and provide personalized guidance.
-              </p>
-              <div className="flex items-center gap-2 text-orange-400 text-sm font-medium">
-                <MessageSquare className="w-4 h-4" />
-                <span>Recommended</span>
-              </div>
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              onClick={() => navigate('/assessment')}
-              className="p-6 bg-white/5 border border-white/20 rounded-xl text-left hover:bg-white/10 transition-all"
-            >
-              <div className="flex items-center gap-3 mb-3">
-                <FileText className="w-6 h-6 text-white/70" />
-                <h3 className="text-lg font-semibold text-white">Traditional Form</h3>
-              </div>
-              <p className="text-white/80 text-sm mb-3">
-                Complete a structured questionnaire at your own pace with step-by-step guidance.
-              </p>
-              <div className="flex items-center gap-2 text-white/60 text-sm">
-                <span>Classic approach</span>
-              </div>
-            </motion.button>
+          <h2 className="text-xl font-semibold text-white mb-4 text-center">Take the Five Pillars Assessment</h2>
+          <motion.button
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => navigate('/assessment')}
+            className="w-full p-6 bg-gradient-to-r from-orange-500/20 to-orange-600/20 border border-orange-400/30 rounded-xl text-left hover:from-orange-500/30 hover:to-orange-600/30 transition-all"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <FileText className="w-6 h-6 text-orange-400" />
+              <h3 className="text-lg font-semibold text-white">Five Pillars Assessment (25 Questions)</h3>
+            </div>
+            <p className="text-white/80 text-sm mb-3">
+              Complete our comprehensive assessment covering all five pillars: Camaraderie, Health, Finance, Community, and Family. 
+              All questions on one page for easy completion.
+            </p>
+            <div className="flex items-center gap-2 text-orange-400 text-sm font-medium">
+              <MessageSquare className="w-4 h-4" />
+              <span>Recommended - Single Page Format</span>
+            </div>
+          </motion.button>
+          
+          {/* Legacy assessments link */}
+          <div className="mt-4 text-center">
+            <p className="text-white/50 text-xs">
+              Looking for the old assessments? 
+              <button
+                onClick={() => navigate('/legacy/conversational-assessment')}
+                className="ml-1 text-orange-400 hover:text-orange-300 underline"
+              >
+                AI Conversation
+              </button>
+              {' or '}
+              <button
+                onClick={() => navigate('/legacy/assessment-form')}
+                className="text-orange-400 hover:text-orange-300 underline"
+              >
+                Step-by-Step Form
+              </button>
+            </p>
           </div>
         </motion.div>
 
@@ -238,10 +239,10 @@ export const WelcomePage: React.FC = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => navigate('/conversational-assessment')}
+            onClick={() => navigate('/assessment')}
             className="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-lg hover:from-orange-600 hover:to-orange-700 transition-all"
           >
-            Start AI Assessment
+            Start Five Pillars Assessment
           </motion.button>
         </motion.div>
       </div>
