@@ -52,38 +52,28 @@ function App() {
             onLogout={handleLogout}
           />
           <div className="min-h-screen bg-gradient-to-br from-purple-900 via-purple-800 to-orange-600">
-            <Routes>
-              <Route path="/" element={<RPALanding />} />
-              <Route path="/welcome" element={<WelcomePage />} />
-              
-              {/* Five Pillars Assessment - New primary assessment */}
-              <Route path="/assessment" element={<FivePillarsAssessment />} />
-              
-              {/* Legacy Routes - Old assessments preserved but not primary */}
-              <Route path="/legacy/assessment-form" element={<AssessmentForm />} />
-              <Route path="/legacy/conversational-assessment" element={<ConversationalAssessment />} />
-              
-              {/* User Type Pages */}
-              <Route path="/active-player" element={<ActivePlayerPage />} />
-              <Route path="/retired-player" element={<RetiredPlayerPage />} />
-              <Route path="/family" element={<FamilyMemberPage />} />
-              <Route path="/business" element={<BusinessPartnerPage />} />
-              <Route path="/fan" element={<FanSupporterPage />} />
-              
-              {/* Five Pillars Pages */}
-              <Route path="/five-pillars" element={<FivePillarsPage />} />
-              <Route path="/pillars/camaraderie" element={<PillarCamaraderieePage />} />
-              <Route path="/pillars/health" element={<PillarHealthPage />} />
-              <Route path="/pillars/finance" element={<PillarFinancePage />} />
-              <Route path="/pillars/community" element={<PillarCommunityPage />} />
-              <Route path="/pillars/family" element={<PillarFamilyPage />} />
-              
-              {/* Blog & Gallery */}
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/blog/:postId" element={<BlogPostPage />} />
-              <Route path="/gallery" element={<GalleryPage />} />
-            </Routes>
-          </div>
+          <Routes>
+            <Route path="/" element={<RPALanding />} />
+            <Route path="/welcome" element={<WelcomePage />} />
+            <Route path="/assessment" element={<FivePillarsAssessment />} />
+            <Route path="/legacy/assessment-form" element={<AssessmentForm />} />
+            <Route path="/legacy/conversational-assessment" element={<ConversationalAssessment />} />
+            <Route path="/active-player" element={<ActivePlayerPage />} />
+            <Route path="/retired-player" element={<RetiredPlayerPage />} />
+            <Route path="/family" element={<FamilyMemberPage />} />
+            <Route path="/business" element={<BusinessPartnerPage />} />
+            <Route path="/fan" element={<FanSupporterPage />} />
+            <Route path="/five-pillars" element={<FivePillarsPage />} />
+            <Route path="/pillars/camaraderie" element={<PillarCamaraderieePage />} />
+            <Route path="/pillars/health" element={<PillarHealthPage />} />
+            <Route path="/pillars/finance" element={<PillarFinancePage />} />
+            <Route path="/pillars/community" element={<PillarCommunityPage />} />
+            <Route path="/pillars/family" element={<PillarFamilyPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:postId" element={<BlogPostPage />} />
+            <Route path="/gallery" element={<GalleryPage />} />
+          </Routes>
+        </div>
         </PillarProgressProvider>
       </TourProvider>
     </Router>
