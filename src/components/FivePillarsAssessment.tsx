@@ -2,9 +2,20 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Download, Copy, Heart, Activity, DollarSign, Users, Home, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { PDFReportButton } from './AssessmentPDFReport';
 
 interface AssessmentData {
   name: string;
+  // Transition Questions (from legacy assessment)
+  q0_emotional_state: string[];
+  q0_career_fulfillment: string;
+  q0_personal_interests: string[];
+  q0_future_goals: string;
+  q0_areas_of_interest: string[];
+  q0_purpose_definition: string;
+  q0_support_system: string[];
+  q0_clarity: number;
+  q0_support_needs: string;
   // Camaraderie
   q1_connection: number;
   q2_player_connection: string;
@@ -179,6 +190,15 @@ export const FivePillarsAssessment: React.FC = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<AssessmentData>({
     name: '',
+    q0_emotional_state: [],
+    q0_career_fulfillment: '',
+    q0_personal_interests: ['', '', ''],
+    q0_future_goals: '',
+    q0_areas_of_interest: [],
+    q0_purpose_definition: '',
+    q0_support_system: [],
+    q0_clarity: 5,
+    q0_support_needs: '',
     q1_connection: 5,
     q2_player_connection: '',
     q3_reach_out_frequency: '',
@@ -219,6 +239,7 @@ export const FivePillarsAssessment: React.FC = () => {
   
   // Refs for scrolling to sections
   const nameRef = useRef<HTMLDivElement>(null);
+  const transitionRef = useRef<HTMLDivElement>(null);
   const camaraderieRef = useRef<HTMLDivElement>(null);
   const healthRef = useRef<HTMLDivElement>(null);
   const financeRef = useRef<HTMLDivElement>(null);
@@ -237,6 +258,8 @@ export const FivePillarsAssessment: React.FC = () => {
     setFormData(prev => {
       const currentArray = prev[field] as string[];
       if (checked) {
+        // Limit areas of interest to 3
+        if (field === 'q0_areas_of_interest' && currentArray.length >= 3) return prev;
         return { ...prev, [field]: [...currentArray, option] };
       } else {
         return { ...prev, [field]: currentArray.filter(item => item !== option) };
@@ -244,30 +267,47 @@ export const FivePillarsAssessment: React.FC = () => {
     });
   };
 
+  const handlePersonalInterestChange = (index: number, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      q0_personal_interests: prev.q0_personal_interests.map((interest, i) => i === index ? value : interest)
+    }));
+  };
+
   const getIncompleteFields = () => {
     const incomplete: string[] = [];
     
     if (formData.name.trim() === '') incomplete.push('Your Name');
-    if (formData.q2_player_connection === '') incomplete.push('Q2: Player Connection Type');
-    if (formData.q3_reach_out_frequency === '') incomplete.push('Q3: Outreach Frequency');
-    if (formData.q4_connection_barriers.length === 0) incomplete.push('Q4: Connection Barriers');
-    if (formData.q5_brotherhood_moment.trim() === '') incomplete.push('Q5: Brotherhood Memory');
-    if (formData.q7_health_attention.length === 0) incomplete.push('Q7: Health Attention Areas');
-    if (formData.q8_health_motivation.length === 0) incomplete.push('Q8: Health Motivation');
-    if (formData.q9_health_routine === '') incomplete.push('Q9: Health Routine');
-    if (formData.q10_healthy_habit.trim() === '') incomplete.push('Q10: Healthy Habit Goal');
-    if (formData.q12_financial_area.length === 0) incomplete.push('Q12: Financial Areas');
-    if (formData.q13_has_advisor === '') incomplete.push('Q13: Financial Advisor');
-    if (formData.q14_review_frequency === '') incomplete.push('Q14: Financial Review Frequency');
-    if (formData.q15_financial_milestone.trim() === '') incomplete.push('Q15: Financial Milestone');
-    if (formData.q17_community_impact.length === 0) incomplete.push('Q17: Community Impact Type');
-    if (formData.q18_community_frequency.length === 0) incomplete.push('Q18: Community Participation');
-    if (formData.q19_community_barriers.length === 0) incomplete.push('Q19: Community Barriers');
-    if (formData.q20_positive_change.trim() === '') incomplete.push('Q20: Positive Change Vision');
-    if (formData.q22_biggest_supporter === '') incomplete.push('Q22: Biggest Supporter');
-    if (formData.q23_family_challenge.length === 0) incomplete.push('Q23: Family Challenges');
-    if (formData.q24_family_activities === '') incomplete.push('Q24: Family Activities');
-    if (formData.q25_family_goal.trim() === '') incomplete.push('Q25: Family Goal');
+    // Transition questions
+    if (formData.q0_emotional_state.length === 0) incomplete.push('Q1: Emotional State');
+    if (formData.q0_career_fulfillment.trim() === '') incomplete.push('Q2: Career Fulfillment');
+    if (formData.q0_personal_interests.every(i => i.trim() === '')) incomplete.push('Q3: Personal Interests');
+    if (formData.q0_future_goals.trim() === '') incomplete.push('Q4: Future Goals');
+    if (formData.q0_areas_of_interest.length === 0) incomplete.push('Q5: Areas of Interest');
+    if (formData.q0_purpose_definition.trim() === '') incomplete.push('Q6: Purpose Definition');
+    if (formData.q0_support_system.length === 0) incomplete.push('Q7: Support System');
+    if (formData.q0_support_needs.trim() === '') incomplete.push('Q9: Support Needs');
+    // Five Pillars questions
+    if (formData.q2_player_connection === '') incomplete.push('Q11: Player Connection Type');
+    if (formData.q3_reach_out_frequency === '') incomplete.push('Q12: Outreach Frequency');
+    if (formData.q4_connection_barriers.length === 0) incomplete.push('Q13: Connection Barriers');
+    if (formData.q5_brotherhood_moment.trim() === '') incomplete.push('Q14: Brotherhood Memory');
+    if (formData.q7_health_attention.length === 0) incomplete.push('Q16: Health Attention Areas');
+    if (formData.q8_health_motivation.length === 0) incomplete.push('Q17: Health Motivation');
+    if (formData.q9_health_routine === '') incomplete.push('Q18: Health Routine');
+    if (formData.q10_healthy_habit.trim() === '') incomplete.push('Q19: Healthy Habit Goal');
+    if (formData.q12_financial_area.length === 0) incomplete.push('Q21: Financial Areas');
+    if (formData.q13_has_advisor === '') incomplete.push('Q22: Financial Advisor');
+    if (formData.q14_review_frequency === '') incomplete.push('Q23: Financial Review Frequency');
+    if (formData.q15_financial_milestone.trim() === '') incomplete.push('Q24: Financial Milestone');
+    if (formData.q17_community_impact.length === 0) incomplete.push('Q26: Community Impact Type');
+    if (formData.q18_community_frequency.length === 0) incomplete.push('Q27: Community Participation');
+    if (formData.q19_community_barriers.length === 0) incomplete.push('Q28: Community Barriers');
+    if (formData.q20_positive_change.trim() === '') incomplete.push('Q29: Positive Change Vision');
+    if (formData.q22_biggest_supporter === '') incomplete.push('Q31: Biggest Supporter');
+    if (formData.q23_family_challenge.length === 0) incomplete.push('Q32: Family Challenges');
+    if (formData.q24_family_activities === '') incomplete.push('Q33: Family Activities');
+    if (formData.q25_family_goal.trim() === '') incomplete.push('Q34: Family Goal');
     
     return incomplete;
   };
@@ -279,6 +319,11 @@ export const FivePillarsAssessment: React.FC = () => {
   const scrollToFirstIncomplete = () => {
     if (formData.name.trim() === '') {
       nameRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else if (formData.q0_emotional_state.length === 0 || formData.q0_career_fulfillment.trim() === '' ||
+               formData.q0_personal_interests.every(i => i.trim() === '') || formData.q0_future_goals.trim() === '' ||
+               formData.q0_areas_of_interest.length === 0 || formData.q0_purpose_definition.trim() === '' ||
+               formData.q0_support_system.length === 0 || formData.q0_support_needs.trim() === '') {
+      transitionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     } else if (formData.q2_player_connection === '' || formData.q3_reach_out_frequency === '' || 
                formData.q4_connection_barriers.length === 0 || formData.q5_brotherhood_moment.trim() === '') {
       camaraderieRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -305,6 +350,32 @@ RPA Connect Platform
 
 Name: ${formData.name}
 Date: ${new Date().toLocaleDateString()}
+
+=====================================
+TRANSITION & PURPOSE
+=====================================
+
+Emotional State: ${formData.q0_emotional_state.join(', ')}
+
+Career Fulfillment:
+${formData.q0_career_fulfillment}
+
+Personal Interests:
+${formData.q0_personal_interests.filter(i => i.trim()).join(', ')}
+
+Future Goals:
+${formData.q0_future_goals}
+
+Areas of Interest: ${formData.q0_areas_of_interest.join(', ')}
+
+Purpose Definition:
+${formData.q0_purpose_definition}
+
+Support System: ${formData.q0_support_system.join(', ')}
+Clarity About Next Steps: ${formData.q0_clarity}/10
+
+Support Needs:
+${formData.q0_support_needs}
 
 =====================================
 1️⃣ CAMARADERIE
@@ -437,33 +508,42 @@ Powered by NBA Retired Players Association
               </pre>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={copyToClipboard}
-                className="px-8 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 hover:from-blue-600 hover:to-blue-700 transition-all"
-              >
-                <Copy className="w-5 h-5" />
-                Copy Report
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={downloadReport}
-                className="px-8 py-4 bg-gradient-to-r from-green-500 to-green-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 hover:from-green-600 hover:to-green-700 transition-all"
-              >
-                <Download className="w-5 h-5" />
-                Download Report
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setShowReport(false)}
-                className="px-8 py-4 bg-white/10 border border-white/20 text-white rounded-xl font-semibold hover:bg-white/20 transition-all"
-              >
-                Back to Form
-              </motion.button>
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <PDFReportButton data={formData} />
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setShowReport(false)}
+                  className="px-8 py-4 bg-white/10 border border-white/20 text-white rounded-xl font-semibold hover:bg-white/20 transition-all"
+                >
+                  Back to Form
+                </motion.button>
+              </div>
+              
+              <div className="text-center">
+                <p className="text-white/60 text-sm mb-3">Or get a text version:</p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={copyToClipboard}
+                    className="px-6 py-2 bg-white/5 border border-white/20 text-white/80 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-white/10 transition-all"
+                  >
+                    <Copy className="w-4 h-4" />
+                    Copy Text
+                  </motion.button>
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={downloadReport}
+                    className="px-6 py-2 bg-white/5 border border-white/20 text-white/80 rounded-lg text-sm font-medium flex items-center justify-center gap-2 hover:bg-white/10 transition-all"
+                  >
+                    <Download className="w-4 h-4" />
+                    Download Text
+                  </motion.button>
+                </div>
+              </div>
             </div>
           </motion.div>
         </div>
@@ -484,7 +564,7 @@ Powered by NBA Retired Players Association
             Five Pillars Assessment
           </h1>
           <p className="text-white/80 text-lg mb-2">
-            A comprehensive 25-question assessment based on the Five Pillars framework
+            A comprehensive 35-question assessment based on the Five Pillars framework
           </p>
           <p className="text-white/60 text-sm">
             Complete all questions to receive your personalized transition report
@@ -527,6 +607,117 @@ Powered by NBA Retired Players Association
             </div>
           </div>
 
+          {/* Transition & Purpose Section */}
+          <div ref={transitionRef} className="space-y-6">
+            <div className="flex items-center gap-3 border-b border-white/20 pb-3">
+              <Activity className="w-6 h-6 text-blue-400" />
+              <h3 className="text-2xl font-semibold text-white">Transition & Purpose</h3>
+            </div>
+
+            <CheckboxGroup
+              questionNumber="Q1"
+              label="How would you describe your emotional state as you transition away from professional basketball?"
+              options={['Excited', 'Anxious', 'Relieved', 'Lost', 'Hopeful', 'Overwhelmed', 'Motivated']}
+              values={formData.q0_emotional_state}
+              onChange={(option, checked) => handleCheckboxChange('q0_emotional_state', option, checked)}
+            />
+
+            <TextAreaInput
+              questionNumber="Q2"
+              label="What parts of your basketball career brought you the most fulfillment? Why?"
+              value={formData.q0_career_fulfillment}
+              onChange={(val) => handleInputChange('q0_career_fulfillment', val)}
+              placeholder="Share what brought you the most joy and satisfaction..."
+            />
+
+            <div className="space-y-3">
+              <label className="block text-white/90 text-sm font-medium">
+                Q3. What are three activities or interests outside of basketball that energize or inspire you?
+              </label>
+              {formData.q0_personal_interests.map((interest, index) => (
+                <div key={index}>
+                  <label className="block text-white/70 text-xs mb-2">
+                    Activity {index + 1}
+                  </label>
+                  <input
+                    type="text"
+                    value={interest}
+                    onChange={(e) => handlePersonalInterestChange(index, e.target.value)}
+                    className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all"
+                    placeholder={`Enter activity ${index + 1}...`}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <TextAreaInput
+              questionNumber="Q4"
+              label="When you think about your life after basketball, what are some things you hope to accomplish?"
+              value={formData.q0_future_goals}
+              onChange={(val) => handleInputChange('q0_future_goals', val)}
+              placeholder="Professional goals, personal aspirations, community impact, legacy..."
+            />
+
+            <div className="space-y-3">
+              <CheckboxGroup
+                questionNumber="Q5"
+                label="Which areas are you most curious about exploring? (Select up to 3)"
+                options={[
+                  'Business/Entrepreneurship',
+                  'Coaching/Mentoring',
+                  'Media/Entertainment',
+                  'Philanthropy/Community Work',
+                  'Real Estate/Investment',
+                  'Health & Wellness',
+                  'Education/Personal Development'
+                ]}
+                values={formData.q0_areas_of_interest}
+                onChange={(option, checked) => handleCheckboxChange('q0_areas_of_interest', option, checked)}
+              />
+              <p className="text-orange-400 text-sm">
+                Selected: {formData.q0_areas_of_interest.length}/3
+              </p>
+            </div>
+
+            <TextAreaInput
+              questionNumber="Q6"
+              label="How would you define 'purpose' for yourself now?"
+              value={formData.q0_purpose_definition}
+              onChange={(val) => handleInputChange('q0_purpose_definition', val)}
+              placeholder="What gives your life meaning and direction now?"
+            />
+
+            <CheckboxGroup
+              questionNumber="Q7"
+              label="Who do you feel supported by right now in your transition?"
+              options={[
+                'Family',
+                'Former teammates',
+                'Coaches/mentors',
+                'Business advisors',
+                'Friends outside basketball',
+                'No one / not sure'
+              ]}
+              values={formData.q0_support_system}
+              onChange={(option, checked) => handleCheckboxChange('q0_support_system', option, checked)}
+            />
+
+            <ScaleInput
+              questionNumber="Q8"
+              label="On a scale of 1 to 10, how clear are you about what you want to do next?"
+              value={formData.q0_clarity}
+              onChange={(val) => handleScaleChange('q0_clarity', val)}
+            />
+
+            <TextAreaInput
+              questionNumber="Q9"
+              label="What would you like most from a transition coach or support team right now?"
+              value={formData.q0_support_needs}
+              onChange={(val) => handleInputChange('q0_support_needs', val)}
+              placeholder="What kind of support, guidance, or resources would be most helpful?"
+            />
+          </div>
+
           {/* 1️⃣ Camaraderie */}
           <div ref={camaraderieRef} className="space-y-6">
             <div className="flex items-center gap-3 border-b border-white/20 pb-3">
@@ -535,14 +726,14 @@ Powered by NBA Retired Players Association
             </div>
 
             <ScaleInput
-              questionNumber="Q1"
+              questionNumber="Q10"
               label="How connected do you currently feel to other players from your era or the RPA network?"
               value={formData.q1_connection}
               onChange={(val) => handleScaleChange('q1_connection', val)}
             />
 
             <RadioGroup
-              questionNumber="Q2"
+              questionNumber="Q11"
               label="What type of player connection do you value most?"
               options={[
                 'Locker room friendship',
@@ -555,7 +746,7 @@ Powered by NBA Retired Players Association
             />
 
             <RadioGroup
-              questionNumber="Q3"
+              questionNumber="Q12"
               label="How often do you reach out or participate in group activities with former teammates or players?"
               options={['Weekly', 'Monthly', 'Occasionally', 'Rarely', 'Never']}
               value={formData.q3_reach_out_frequency}
@@ -564,7 +755,7 @@ Powered by NBA Retired Players Association
 
             <div className="space-y-3">
               <CheckboxGroup
-                questionNumber="Q4"
+                questionNumber="Q13"
                 label="What keeps you from connecting more often with fellow players? (Select all that apply)"
                 options={['Busy schedule', 'Distance / geography', 'No clear way to reconnect', "Haven't found the right group yet", 'Other']}
                 values={formData.q4_connection_barriers}
@@ -582,7 +773,7 @@ Powered by NBA Retired Players Association
             </div>
 
             <TextAreaInput
-              questionNumber="Q5"
+              questionNumber="Q14"
               label="Describe one moment of brotherhood or camaraderie that you miss most from your playing days."
               value={formData.q5_brotherhood_moment}
               onChange={(val) => handleInputChange('q5_brotherhood_moment', val)}
@@ -598,14 +789,14 @@ Powered by NBA Retired Players Association
             </div>
 
             <ScaleInput
-              questionNumber="Q6"
+              questionNumber="Q15"
               label="How would you rate your current physical health and fitness level?"
               value={formData.q6_physical_health}
               onChange={(val) => handleScaleChange('q6_physical_health', val)}
             />
 
             <CheckboxGroup
-              questionNumber="Q7"
+              questionNumber="Q16"
               label="Which areas of your health need the most attention right now? (Select all that apply)"
               options={['Nutrition', 'Physical conditioning', 'Mental health', 'Recovery / sleep', 'Preventive care']}
               values={formData.q7_health_attention}
@@ -614,7 +805,7 @@ Powered by NBA Retired Players Association
 
             <div className="space-y-3">
               <CheckboxGroup
-                questionNumber="Q8"
+                questionNumber="Q17"
                 label="What motivates you to stay healthy today compared to when you were playing? (Select all that apply)"
                 options={['Performance goals', 'Longevity / quality of life', 'Family example', 'Appearance / self-confidence', 'Other']}
                 values={formData.q8_health_motivation}
@@ -632,7 +823,7 @@ Powered by NBA Retired Players Association
             </div>
 
             <RadioGroup
-              questionNumber="Q9"
+              questionNumber="Q18"
               label="How consistent is your current health routine (workouts, meals, checkups, etc.)?"
               options={['Daily', 'Several times a week', 'Occasionally', 'Rarely', 'Never']}
               value={formData.q9_health_routine}
@@ -640,7 +831,7 @@ Powered by NBA Retired Players Association
             />
 
             <TextAreaInput
-              questionNumber="Q10"
+              questionNumber="Q19"
               label="What one healthy habit do you want to commit to improving this year?"
               value={formData.q10_healthy_habit}
               onChange={(val) => handleInputChange('q10_healthy_habit', val)}
@@ -656,14 +847,14 @@ Powered by NBA Retired Players Association
             </div>
 
             <ScaleInput
-              questionNumber="Q11"
+              questionNumber="Q20"
               label="How confident do you feel about your current financial stability and long-term planning?"
               value={formData.q11_financial_confidence}
               onChange={(val) => handleScaleChange('q11_financial_confidence', val)}
             />
 
             <CheckboxGroup
-              questionNumber="Q12"
+              questionNumber="Q21"
               label="Which of these financial areas do you most want to strengthen? (Select all that apply)"
               options={[
                 'Investments and portfolio management',
@@ -678,7 +869,7 @@ Powered by NBA Retired Players Association
 
             <div className="space-y-3">
               <RadioGroup
-                questionNumber="Q13"
+                questionNumber="Q22"
                 label="Do you currently work with a financial advisor or planner?"
                 options={['Yes', 'No']}
                 value={formData.q13_has_advisor}
@@ -686,7 +877,7 @@ Powered by NBA Retired Players Association
               />
               {formData.q13_has_advisor === 'Yes' && (
                 <ScaleInput
-                  questionNumber="Q13b"
+                  questionNumber="Q22b"
                   label="How satisfied are you with their guidance?"
                   value={formData.q13_advisor_satisfaction}
                   onChange={(val) => handleScaleChange('q13_advisor_satisfaction', val)}
@@ -695,7 +886,7 @@ Powered by NBA Retired Players Association
             </div>
 
             <RadioGroup
-              questionNumber="Q14"
+              questionNumber="Q23"
               label="How often do you review or update your financial goals?"
               options={['Monthly', 'Quarterly', 'Annually', 'Rarely', 'Never']}
               value={formData.q14_review_frequency}
@@ -703,7 +894,7 @@ Powered by NBA Retired Players Association
             />
 
             <TextAreaInput
-              questionNumber="Q15"
+              questionNumber="Q24"
               label="What financial goal or milestone are you most proud of since retiring?"
               value={formData.q15_financial_milestone}
               onChange={(val) => handleInputChange('q15_financial_milestone', val)}
@@ -719,7 +910,7 @@ Powered by NBA Retired Players Association
             </div>
 
             <ScaleInput
-              questionNumber="Q16"
+              questionNumber="Q25"
               label="How involved are you in giving back to your community or supporting causes you care about?"
               value={formData.q16_community_involvement}
               onChange={(val) => handleScaleChange('q16_community_involvement', val)}
@@ -727,7 +918,7 @@ Powered by NBA Retired Players Association
 
             <div className="space-y-3">
               <CheckboxGroup
-                questionNumber="Q17"
+                questionNumber="Q26"
                 label="What types of community impact matter most to you? (Select all that apply)"
                 options={[
                   'Youth mentorship',
@@ -752,7 +943,7 @@ Powered by NBA Retired Players Association
             </div>
 
             <CheckboxGroup
-              questionNumber="Q18"
+              questionNumber="Q27"
               label="How often do you participate in community or charity events? (Select all that apply)"
               options={['Monthly', 'Quarterly', 'Occasionally', 'Rarely', 'Never']}
               values={formData.q18_community_frequency}
@@ -761,7 +952,7 @@ Powered by NBA Retired Players Association
 
             <div className="space-y-3">
               <CheckboxGroup
-                questionNumber="Q19"
+                questionNumber="Q28"
                 label="What prevents you from doing more community work? (Select all that apply)"
                 options={['Time', 'Resources', 'No organized opportunities', 'Lack of awareness', 'Other']}
                 values={formData.q19_community_barriers}
@@ -779,7 +970,7 @@ Powered by NBA Retired Players Association
             </div>
 
             <TextAreaInput
-              questionNumber="Q20"
+              questionNumber="Q29"
               label="Describe one way you'd like to use your platform or influence to create positive change."
               value={formData.q20_positive_change}
               onChange={(val) => handleInputChange('q20_positive_change', val)}
@@ -795,7 +986,7 @@ Powered by NBA Retired Players Association
             </div>
 
             <ScaleInput
-              questionNumber="Q21"
+              questionNumber="Q30"
               label="How would you describe your current work-life balance with family time?"
               value={formData.q21_work_life_balance}
               onChange={(val) => handleScaleChange('q21_work_life_balance', val)}
@@ -803,7 +994,7 @@ Powered by NBA Retired Players Association
 
             <div className="space-y-3">
               <RadioGroup
-                questionNumber="Q22"
+                questionNumber="Q31"
                 label="Who in your family has been your biggest supporter through your transition?"
                 options={['Partner / Spouse', 'Parent', 'Sibling', 'Child', 'Other']}
                 value={formData.q22_biggest_supporter}
@@ -822,7 +1013,7 @@ Powered by NBA Retired Players Association
 
             <div className="space-y-3">
               <CheckboxGroup
-                questionNumber="Q23"
+                questionNumber="Q32"
                 label="What family-related challenges have been most difficult in retirement? (Select all that apply)"
                 options={[
                   'Adjusting to new routines',
@@ -846,7 +1037,7 @@ Powered by NBA Retired Players Association
             </div>
 
             <RadioGroup
-              questionNumber="Q24"
+              questionNumber="Q33"
               label="How often does your family engage in shared activities or traditions together?"
               options={['Weekly', 'Monthly', 'Occasionally', 'Rarely', 'Never']}
               value={formData.q24_family_activities}
@@ -854,7 +1045,7 @@ Powered by NBA Retired Players Association
             />
 
             <TextAreaInput
-              questionNumber="Q25"
+              questionNumber="Q34"
               label="What's one family goal or tradition you'd like to strengthen this year?"
               value={formData.q25_family_goal}
               onChange={(val) => handleInputChange('q25_family_goal', val)}
