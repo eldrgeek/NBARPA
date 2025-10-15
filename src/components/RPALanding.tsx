@@ -104,21 +104,10 @@ const journeyOptions: JourneyOption[] = [
 export const RPALanding: React.FC = () => {
   const navigate = useNavigate();
   const { startTour, pageVisible, tourActive, visibleCards } = useTour();
-  const [activePlayers, setActivePlayers] = useState(523);
-  const [mentorshipHours, setMentorshipHours] = useState(1247);
-  const [successStories, setSuccessStories] = useState(89);
+  const [playersConnected, setPlayersConnected] = useState(1);
+  const [assessmentsTaken, setAssessmentsTaken] = useState(1);
+  const [mentorshipHours, setMentorshipHours] = useState(25);
   const [showQuickQuiz, setShowQuickQuiz] = useState(false);
-
-  // Animate counters on mount
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActivePlayers(prev => prev < 530 ? prev + 1 : prev);
-      setMentorshipHours(prev => prev < 1250 ? prev + 1 : prev);
-      setSuccessStories(prev => prev < 92 ? prev + 1 : prev);
-    }, 50);
-    
-    return () => clearInterval(timer);
-  }, []);
 
   const handleJourneySelect = (journey: JourneyOption) => {
     if (journey.available) {
@@ -156,7 +145,7 @@ export const RPALanding: React.FC = () => {
             </h2>
             <p className="text-white/90 text-xl max-w-3xl mx-auto mb-8">
               Join 500+ NBA players building successful second careers through personalized transition planning, 
-              direct access to our alumni network, and the proven Five Pillars framework.
+              direct access to our alumni network, and the Five Pillars framework.
             </p>
             
             {/* Success Metrics */}
@@ -167,7 +156,7 @@ export const RPALanding: React.FC = () => {
                 transition={{ delay: 0.2 }}
                 className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20"
               >
-                <div className="text-3xl font-bold text-orange-400">{activePlayers}+</div>
+                <div className="text-3xl font-bold text-orange-400">{playersConnected}</div>
                 <div className="text-white/80 text-sm">Players Connected</div>
               </motion.div>
               <motion.div 
@@ -176,8 +165,8 @@ export const RPALanding: React.FC = () => {
                 transition={{ delay: 0.3 }}
                 className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20"
               >
-                <div className="text-3xl font-bold text-orange-400">{mentorshipHours.toLocaleString()}+</div>
-                <div className="text-white/80 text-sm">Mentorship Hours</div>
+                <div className="text-3xl font-bold text-orange-400">{assessmentsTaken}</div>
+                <div className="text-white/80 text-sm">Assessments Taken</div>
               </motion.div>
               <motion.div 
                 initial={{ scale: 0 }}
@@ -185,8 +174,8 @@ export const RPALanding: React.FC = () => {
                 transition={{ delay: 0.4 }}
                 className="bg-white/10 backdrop-blur rounded-xl p-4 border border-white/20"
               >
-                <div className="text-3xl font-bold text-orange-400">{successStories}%</div>
-                <div className="text-white/80 text-sm">Success Rate</div>
+                <div className="text-3xl font-bold text-orange-400">{mentorshipHours}</div>
+                <div className="text-white/80 text-sm">Mentorship Hours</div>
               </motion.div>
             </div>
             
