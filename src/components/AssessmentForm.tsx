@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowRight, Download, CheckCircle, ShoppingBasket as Basketball, Star, Trophy, ExternalLink, Copy, FileText, Edit } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Download, CheckCircle, ShoppingBasket as Basketball, Star, Trophy, ExternalLink, Copy, FileText, Edit, Loader, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { saveAssessment } from '../lib/firebase';
+import { resolvePlayerName, getPlayerSuggestions, type Player } from '../services/playerResolver';
 
 interface FormData {
   name: string;
@@ -55,6 +57,15 @@ export const AssessmentForm: React.FC = () => {
     supportNeeds: ''
   });
 
+  // Player resolution state
+  const [playerSuggestions, setPlayerSuggestions] = useState<Player[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [resolvedPlayer, setResolvedPlayer] = useState<Player | null>(null);
+  const [isResolvingPlayer, setIsResolvingPlayer] = useState(false);
+  const [isSavingAssessment, setIsSavingAssessment] = useState(false);
+  const [assessmentSaved, setAssessmentSaved] = useState(false);
+  const [savedAssessmentId, setSavedAssessmentId] = useState<string | null>(null);
+
   const totalSteps = 10; // Added one more step for summary
   const progress = ((completedSteps.size + (currentStep > 0 ? 1 : 0)) / totalSteps) * 100;
 
@@ -95,6 +106,63 @@ export const AssessmentForm: React.FC = () => {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
+
+  // Player name autocomplete
+  const handleNameChange = async (value: string) => {
+    setFormData(prev => ({ ...prev, name: value }));
+    
+    if (value.length >= 2) {
+      const suggestions = await getPlayerSuggestions(value, 10);
+      setPlayerSuggestions(suggestions);
+      setShowSuggestions(suggestions.length > 0);
+    } else {
+      setPlayerSuggestions([]);
+      setShowSuggestions(false);
+    }
+  };
+
+  const selectPlayer = (player: Player) => {
+    setFormData(prev => ({ ...prev, name: player.full_name }));
+    setResolvedPlayer(player);
+    setShowSuggestions(false);
+    
+    // Auto-advance to next step after selection
+    setTimeout(() => {
+      if (currentStep === 0) {
+        nextStep();
+      }
+    }, 400);
+  };
+
+  // Resolve player when moving to next step
+  const resolvePlayer = async () => {
+    if (!formData.name || formData.name.trim().length === 0) return;
+    
+    setIsResolvingPlayer(true);
+    const result = await resolvePlayerName(formData.name);
+    
+    if (result.player && result.confidence === 'high') {
+      setResolvedPlayer(result.player);
+      // Auto-advance after successful match
+      setTimeout(() => {
+        if (currentStep === 0 && isStepComplete(0)) {
+          nextStep();
+        }
+      }, 500);
+    } else if (result.suggestions.length > 0) {
+      setPlayerSuggestions(result.suggestions);
+      setShowSuggestions(true);
+    } else if (formData.name.trim().length > 0) {
+      // If no match but name is entered, still advance
+      setTimeout(() => {
+        if (currentStep === 0 && isStepComplete(0)) {
+          nextStep();
+        }
+      }, 300);
+    }
+    
+    setIsResolvingPlayer(false);
+  };
 
   const handleArrayChange = (field: keyof FormData, value: string, checked?: boolean) => {
     setFormData(prev => {
@@ -221,6 +289,31 @@ Powered by Legends of Basketball
     }
   };
 
+  const saveAssessmentToFirebase = async () => {
+    setIsSavingAssessment(true);
+    
+    try {
+      const assessmentId = await saveAssessment({
+        player_id: resolvedPlayer?.player_id,
+        player_name: formData.name,
+        timestamp: new Date(),
+        assessment_data: formData,
+        status: 'completed'
+      });
+      
+      if (assessmentId) {
+        setAssessmentSaved(true);
+        setSavedAssessmentId(assessmentId);
+        console.log('Assessment saved successfully:', assessmentId);
+      }
+    } catch (error) {
+      console.error('Error saving assessment:', error);
+      alert('Failed to save assessment. Please try downloading it instead.');
+    } finally {
+      setIsSavingAssessment(false);
+    }
+  };
+
   const copyToClipboard = () => {
     const report = generateTextReport();
     navigator.clipboard.writeText(report).then(() => {
@@ -244,6 +337,25 @@ Powered by Legends of Basketball
           <p className="text-white/80">
             Review your responses below and download your personalized report.
           </p>
+          
+          {resolvedPlayer && (
+            <div className="mt-4 p-3 bg-green-500/20 border border-green-400 rounded-lg">
+              <p className="text-green-400 text-sm">
+                ✅ Matched to: <strong>{resolvedPlayer.full_name}</strong>
+                {resolvedPlayer.position && ` (${resolvedPlayer.position})`}
+              </p>
+            </div>
+          )}
+
+          {assessmentSaved && savedAssessmentId && (
+            <div className="mt-4 p-3 bg-blue-500/20 border border-blue-400 rounded-lg">
+              <p className="text-blue-400 text-sm">
+                💾 Assessment saved successfully!
+                <br />
+                <span className="text-xs opacity-70">ID: {savedAssessmentId}</span>
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="space-y-6 max-h-96 overflow-y-auto bg-white/5 rounded-xl p-6">
@@ -353,6 +465,27 @@ Powered by Legends of Basketball
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          {!assessmentSaved && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={saveAssessmentToFirebase}
+              disabled={isSavingAssessment}
+              className="px-8 py-4 bg-gradient-to-r from-purple-500 to-purple-600 text-white rounded-xl font-semibold flex items-center justify-center gap-2 hover:from-purple-600 hover:to-purple-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isSavingAssessment ? (
+                <>
+                  <Loader className="w-5 h-5 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                <>
+                  <Download className="w-5 h-5" />
+                  Save to Database
+                </>
+              )}
+            </motion.button>
+          )}
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -385,17 +518,70 @@ Powered by Legends of Basketball
       case 0:
         return (
           <div className="space-y-6">
-            <div>
+            <div className="relative">
               <label className="block text-white/90 text-sm font-medium mb-3">
                 Your Name
               </label>
-              <input
-                type="text"
-                value={formData.name}
-                onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all"
-                placeholder="Enter your full name"
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  value={formData.name}
+                  onChange={(e) => handleNameChange(e.target.value)}
+                  onBlur={() => {
+                    setTimeout(() => setShowSuggestions(false), 200);
+                    resolvePlayer();
+                  }}
+                  onFocus={() => {
+                    if (playerSuggestions.length > 0) {
+                      setShowSuggestions(true);
+                    }
+                  }}
+                  className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent transition-all"
+                  placeholder="Enter your full name (e.g., Michael Jordan)"
+                />
+                {isResolvingPlayer && (
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                    <Loader className="w-5 h-5 text-orange-400 animate-spin" />
+                  </div>
+                )}
+              </div>
+
+              {/* Player suggestions dropdown */}
+              {showSuggestions && playerSuggestions.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="absolute z-10 w-full mt-2 bg-gray-900 border border-white/20 rounded-xl shadow-xl max-h-60 overflow-y-auto"
+                >
+                  {playerSuggestions.map((player) => (
+                    <button
+                      key={player.player_id}
+                      onClick={() => selectPlayer(player)}
+                      className="w-full px-4 py-3 text-left hover:bg-white/10 transition-colors border-b border-white/10 last:border-b-0"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="text-white font-medium">{player.full_name}</span>
+                        {player.position && (
+                          <span className="text-xs text-white/60 ml-2">{player.position}</span>
+                        )}
+                      </div>
+                      {player.nicknames && (
+                        <span className="text-xs text-white/50">aka {player.nicknames}</span>
+                      )}
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+
+              {resolvedPlayer && (
+                <div className="mt-3 p-3 bg-green-500/20 border border-green-400 rounded-lg flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-400" />
+                  <p className="text-green-400 text-sm">
+                    Matched to: <strong>{resolvedPlayer.full_name}</strong>
+                    {resolvedPlayer.position && ` (${resolvedPlayer.position})`}
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         );

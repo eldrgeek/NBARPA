@@ -24,6 +24,8 @@ import { FivePillarsPage } from './pages/FivePillarsPage';
 import { BlogPage } from './pages/BlogPage';
 import { BlogPostPage } from './pages/BlogPostPage';
 import { GalleryPage } from './pages/GalleryPage';
+import { AdminDashboard } from './pages/AdminDashboard';
+import { DebugFirebase } from './pages/DebugFirebase';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -72,6 +74,8 @@ function App() {
             <Route path="/blog" element={<BlogPage />} />
             <Route path="/blog/:postId" element={<BlogPostPage />} />
             <Route path="/gallery" element={<GalleryPage />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/debug" element={<DebugFirebase />} />
           </Routes>
         </div>
         </PillarProgressProvider>

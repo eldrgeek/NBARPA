@@ -1,0 +1,29 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Players collection - allow read and write (TEMPORARY for import)
+    match /players/{playerId} {
+      allow read, write: if true;
+    }
+    
+    // Assessments collection - allow creation and reading
+    match /assessments/{assessmentId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if false; // Prevent modifications for now
+    }
+    
+    // Analytics collection - allow read and write
+    match /analytics/{doc} {
+      allow read, write: if true;
+    }
+    
+    // Admin logs - allow read and write
+    match /admin_logs/{logId} {
+      allow read, write: if true;
+    }
+  }
+}
+
