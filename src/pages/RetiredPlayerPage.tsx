@@ -78,7 +78,11 @@ Reconnect with former teammates and opponents while accessing the latest resourc
 
 *"Once a player, always family. Your jersey may be retired, but your impact continues."*
 
-The game gave you a platform. Now use it to build something lasting.`;
+The game gave you a platform. Now use it to build something lasting.
+
+---
+
+**Learn more about the NBA Retired Players Association at [LegendsofBasketball.com](https://legendsofbasketball.com)**`;
 
 export const RetiredPlayerPage: React.FC = () => {
   return (

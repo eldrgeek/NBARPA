@@ -72,7 +72,11 @@ Fully customized partnership with C-suite access, multi-year talent strategies, 
 
 *"When you partner with NBA players, you're not just hiring employees or spokespeople—you're gaining champions who know what it takes to win."*
 
-Transform your business with the power of NBA talent. Contact us today to explore partnership opportunities.`;
+Transform your business with the power of NBA talent. Contact us today to explore partnership opportunities.
+
+---
+
+**Learn more about the NBA Retired Players Association at [LegendsofBasketball.com](https://legendsofbasketball.com)**`;
 
 export const BusinessPartnerPage: React.FC = () => {
   return (

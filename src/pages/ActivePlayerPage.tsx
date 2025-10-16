@@ -50,7 +50,11 @@ Identity Beyond Basketball, Stress Management, and comprehensive support for you
 
 *"The best time to plant a tree was 20 years ago. The second best time is now."*
 
-Start your transition planning today while you have the power, platform, and resources of an active player.`;
+Start your transition planning today while you have the power, platform, and resources of an active player.
+
+---
+
+**Learn more about the NBA Retired Players Association at [LegendsofBasketball.com](https://legendsofbasketball.com)**`;
 
 export const ActivePlayerPage: React.FC = () => {
   return (

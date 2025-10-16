@@ -8,7 +8,8 @@ import {
   Heart, 
   ArrowRight,
   Home,
-  Check
+  Check,
+  ExternalLink
 } from 'lucide-react';
 import { usePillarProgressContext } from '../contexts/PillarProgressContext';
 
@@ -316,6 +317,24 @@ export const FivePillarsPage: React.FC = () => {
                 <p className="text-white/70 text-sm text-center">Education and advocacy opportunities for player welfare</p>
               </div>
             </div>
+          </motion.div>
+
+          {/* Footer with Association Link */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.8 }}
+            className="text-center mt-12 pb-8"
+          >
+            <a
+              href="https://legendsofbasketball.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-white/60 hover:text-white/80 text-sm transition-colors"
+            >
+              <span>Learn more about Legends of Basketball</span>
+              <ExternalLink className="w-4 h-4" />
+            </a>
           </motion.div>
         </div>
       </div>
