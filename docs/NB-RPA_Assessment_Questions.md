@@ -1,4 +1,4 @@
-RPA CONNECT: The Five Pillars Assessment (25 Questions)
+RPA CONNECT: The Five Pillars Assessment (34 Questions)
 This section expands the NB-RPA model using Antonio Davis’ Five Pillars: Camaraderie, Health, Finance, Community, and Family. Each pillar includes five balanced questions that combine reflection and scoring to guide coaching conversations and data insights.
 
 1️⃣ Camaraderie

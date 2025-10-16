@@ -564,7 +564,7 @@ Powered by NBA Retired Players Association
             Five Pillars Assessment
           </h1>
           <p className="text-white/80 text-lg mb-2">
-            A comprehensive 35-question assessment based on the Five Pillars framework
+            A comprehensive 34-question assessment based on the Five Pillars framework
           </p>
           <p className="text-white/60 text-sm">
             Complete all questions to receive your personalized transition report

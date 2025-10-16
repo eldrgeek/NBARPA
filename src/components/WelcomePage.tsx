@@ -100,7 +100,7 @@ export const WelcomePage: React.FC = () => {
           >
             <div className="flex items-center gap-3 mb-3">
               <FileText className="w-6 h-6 text-orange-400" />
-              <h3 className="text-lg font-semibold text-white">Five Pillars Assessment (25 Questions)</h3>
+              <h3 className="text-lg font-semibold text-white">Five Pillars Assessment (34 Questions)</h3>
             </div>
             <p className="text-white/80 text-sm mb-3">
               Complete our comprehensive assessment covering all five pillars: Camaraderie, Health, Finance, Community, and Family. 
