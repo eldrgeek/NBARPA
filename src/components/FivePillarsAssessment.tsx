@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Download, Copy, Heart, Activity, DollarSign, Users, Home, AlertCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { PDFReportButton } from './AssessmentPDFReport';
+import AssessmentPDF from './AssessmentPDFReport';
+import { BlobProvider } from '@react-pdf/renderer';
 
 interface AssessmentData {
   name: string;
@@ -502,10 +504,26 @@ Powered by NBA Retired Players Association
               <p className="text-white/80">Thank you for completing the Five Pillars Assessment</p>
             </div>
 
-            <div className="bg-white/5 rounded-xl p-6 mb-6 max-h-96 overflow-y-auto">
-              <pre className="text-white/90 text-sm whitespace-pre-wrap font-mono">
-                {generateReport()}
-              </pre>
+            {/* PDF Preview */}
+            <div className="bg-white/5 rounded-xl p-2 mb-6">
+              <BlobProvider document={<AssessmentPDF data={formData} />}>
+                {({ blob, url, loading }) => {
+                  if (loading) {
+                    return (
+                      <div className="h-96 flex items-center justify-center">
+                        <p className="text-white/60">Generating PDF preview...</p>
+                      </div>
+                    );
+                  }
+                  return (
+                    <iframe
+                      src={url || ''}
+                      className="w-full h-96 rounded-lg bg-white"
+                      title="PDF Preview"
+                    />
+                  );
+                }}
+              </BlobProvider>
             </div>
 
             <div className="flex flex-col gap-4">
