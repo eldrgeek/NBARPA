@@ -441,7 +441,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
       {/* Camaraderie Pillar */}
       <Page size="A4" style={styles.page}>
         <Text style={[styles.sectionTitle, { borderBottomColor: '#ff6b35' }]}>
-          🤝 Pillar 1: Camaraderie
+          Pillar 1: Camaraderie
         </Text>
         
         <View style={{ marginBottom: 20 }}>
@@ -456,7 +456,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         {camaraderieAnalysis.strengths.length > 0 && (
           <View style={styles.strengthsSection}>
-            <Text style={[styles.sectionHeader, { color: '#2e7d32' }]}>✓ Your Strengths</Text>
+            <Text style={[styles.sectionHeader, { color: '#2e7d32' }]}>Your Strengths</Text>
             {camaraderieAnalysis.strengths.map((strength, idx) => (
               <Text key={idx} style={styles.bulletPoint}>• {strength}</Text>
             ))}
@@ -465,7 +465,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         {camaraderieAnalysis.improvements.length > 0 && (
           <View style={styles.improvementSection}>
-            <Text style={[styles.sectionHeader, { color: '#e65100' }]}>⚡ Areas for Growth</Text>
+            <Text style={[styles.sectionHeader, { color: '#e65100' }]}>Areas for Growth</Text>
             {camaraderieAnalysis.improvements.map((improvement, idx) => (
               <Text key={idx} style={styles.bulletPoint}>• {improvement}</Text>
             ))}
@@ -480,7 +480,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
         )}
 
         <View style={styles.actionPlan}>
-          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>🎯 Recommended Actions</Text>
+          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>Recommended Actions</Text>
           {camaraderieAnalysis.score <= 5 && (
             <Text style={styles.actionItem}>
               • Reach out to 2-3 former teammates this month to reconnect
@@ -505,7 +505,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
       {/* Health Pillar */}
       <Page size="A4" style={styles.page}>
         <Text style={[styles.sectionTitle, { borderBottomColor: '#4caf50' }]}>
-          💪 Pillar 2: Health
+          Pillar 2: Health
         </Text>
         
         <View style={{ marginBottom: 20 }}>
@@ -520,7 +520,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         {healthAnalysis.strengths.length > 0 && (
           <View style={styles.strengthsSection}>
-            <Text style={[styles.sectionHeader, { color: '#2e7d32' }]}>✓ Your Strengths</Text>
+            <Text style={[styles.sectionHeader, { color: '#2e7d32' }]}>Your Strengths</Text>
             {healthAnalysis.strengths.map((strength, idx) => (
               <Text key={idx} style={styles.bulletPoint}>• {strength}</Text>
             ))}
@@ -529,7 +529,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         {healthAnalysis.improvements.length > 0 && (
           <View style={styles.improvementSection}>
-            <Text style={[styles.sectionHeader, { color: '#e65100' }]}>⚡ Areas for Growth</Text>
+            <Text style={[styles.sectionHeader, { color: '#e65100' }]}>Areas for Growth</Text>
             {healthAnalysis.improvements.map((improvement, idx) => (
               <Text key={idx} style={styles.bulletPoint}>• {improvement}</Text>
             ))}
@@ -544,7 +544,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
         )}
 
         <View style={styles.actionPlan}>
-          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>🎯 Recommended Actions</Text>
+          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>Recommended Actions</Text>
           {healthAnalysis.score <= 5 && (
             <Text style={styles.actionItem}>
               • Schedule a comprehensive physical with a sports medicine specialist
@@ -574,7 +574,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
       {/* Finance Pillar */}
       <Page size="A4" style={styles.page}>
         <Text style={[styles.sectionTitle, { borderBottomColor: '#ffc107' }]}>
-          💰 Pillar 3: Finance
+          Pillar 3: Finance
         </Text>
         
         <View style={{ marginBottom: 20 }}>
@@ -589,7 +589,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         {financeAnalysis.strengths.length > 0 && (
           <View style={styles.strengthsSection}>
-            <Text style={[styles.sectionHeader, { color: '#2e7d32' }]}>✓ Your Strengths</Text>
+            <Text style={[styles.sectionHeader, { color: '#2e7d32' }]}>Your Strengths</Text>
             {financeAnalysis.strengths.map((strength, idx) => (
               <Text key={idx} style={styles.bulletPoint}>• {strength}</Text>
             ))}
@@ -598,7 +598,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         {financeAnalysis.improvements.length > 0 && (
           <View style={styles.improvementSection}>
-            <Text style={[styles.sectionHeader, { color: '#e65100' }]}>⚡ Areas for Growth</Text>
+            <Text style={[styles.sectionHeader, { color: '#e65100' }]}>Areas for Growth</Text>
             {financeAnalysis.improvements.map((improvement, idx) => (
               <Text key={idx} style={styles.bulletPoint}>• {improvement}</Text>
             ))}
@@ -613,7 +613,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
         )}
 
         <View style={styles.actionPlan}>
-          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>🎯 Recommended Actions</Text>
+          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>Recommended Actions</Text>
           {data.q13_has_advisor === 'No' && (
             <Text style={styles.actionItem}>
               • Connect with RPA's vetted financial advisors who specialize in athlete transitions
@@ -643,7 +643,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
       {/* Community Pillar */}
       <Page size="A4" style={styles.page}>
         <Text style={[styles.sectionTitle, { borderBottomColor: '#9c27b0' }]}>
-          🌟 Pillar 4: Community
+          Pillar 4: Community
         </Text>
         
         <View style={{ marginBottom: 20 }}>
@@ -658,7 +658,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         {communityAnalysis.strengths.length > 0 && (
           <View style={styles.strengthsSection}>
-            <Text style={[styles.sectionHeader, { color: '#2e7d32' }]}>✓ Your Strengths</Text>
+            <Text style={[styles.sectionHeader, { color: '#2e7d32' }]}>Your Strengths</Text>
             {communityAnalysis.strengths.map((strength, idx) => (
               <Text key={idx} style={styles.bulletPoint}>• {strength}</Text>
             ))}
@@ -667,7 +667,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         {communityAnalysis.improvements.length > 0 && (
           <View style={styles.improvementSection}>
-            <Text style={[styles.sectionHeader, { color: '#e65100' }]}>⚡ Areas for Growth</Text>
+            <Text style={[styles.sectionHeader, { color: '#e65100' }]}>Areas for Growth</Text>
             {communityAnalysis.improvements.map((improvement, idx) => (
               <Text key={idx} style={styles.bulletPoint}>• {improvement}</Text>
             ))}
@@ -682,7 +682,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
         )}
 
         <View style={styles.actionPlan}>
-          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>🎯 Recommended Actions</Text>
+          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>Recommended Actions</Text>
           {communityAnalysis.score <= 5 && (
             <Text style={styles.actionItem}>
               • Identify one cause or organization that aligns with your values
@@ -712,7 +712,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
       {/* Family Pillar */}
       <Page size="A4" style={styles.page}>
         <Text style={[styles.sectionTitle, { borderBottomColor: '#2196f3' }]}>
-          ❤️ Pillar 5: Family
+          Pillar 5: Family
         </Text>
         
         <View style={{ marginBottom: 20 }}>
@@ -727,7 +727,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         {familyAnalysis.strengths.length > 0 && (
           <View style={styles.strengthsSection}>
-            <Text style={[styles.sectionHeader, { color: '#2e7d32' }]}>✓ Your Strengths</Text>
+            <Text style={[styles.sectionHeader, { color: '#2e7d32' }]}>Your Strengths</Text>
             {familyAnalysis.strengths.map((strength, idx) => (
               <Text key={idx} style={styles.bulletPoint}>• {strength}</Text>
             ))}
@@ -736,7 +736,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         {familyAnalysis.improvements.length > 0 && (
           <View style={styles.improvementSection}>
-            <Text style={[styles.sectionHeader, { color: '#e65100' }]}>⚡ Areas for Growth</Text>
+            <Text style={[styles.sectionHeader, { color: '#e65100' }]}>Areas for Growth</Text>
             {familyAnalysis.improvements.map((improvement, idx) => (
               <Text key={idx} style={styles.bulletPoint}>• {improvement}</Text>
             ))}
@@ -751,7 +751,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
         )}
 
         <View style={styles.actionPlan}>
-          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>🎯 Recommended Actions</Text>
+          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>Recommended Actions</Text>
           {familyAnalysis.score <= 5 && (
             <Text style={styles.actionItem}>
               • Have an open conversation with family about transition goals and expectations
@@ -818,7 +818,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
         )}
 
         <View style={styles.actionPlan}>
-          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>🎯 Next Steps for Your Transition</Text>
+          <Text style={[styles.sectionHeader, { color: '#1565c0' }]}>Next Steps for Your Transition</Text>
           {data.q0_clarity <= 5 && (
             <Text style={styles.actionItem}>
               • Schedule a one-on-one session with an RPA transition coach
@@ -872,7 +872,7 @@ const AssessmentPDF: React.FC<{ data: AssessmentData }> = ({ data }) => {
 
         <View style={[styles.actionPlan, { marginTop: 25 }]}>
           <Text style={[styles.sectionHeader, { color: '#1565c0', marginBottom: 12 }]}>
-            🎯 Your 30-Day Action Plan
+            Your 30-Day Action Plan
           </Text>
           <Text style={styles.actionItem}>
             Week 1: Review this report and share it with your RPA transition coach
