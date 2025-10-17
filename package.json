@@ -11,6 +11,10 @@
     "db:setup": "node src/db/setup.js",
     "db:import": "node src/db/import-data.js",
     "firebase:import": "tsx scripts/import-nba-data.ts",
+    "firebase:import-teams": "tsx scripts/firebase-import-teams.ts",
+    "firebase:import-seasons": "tsx scripts/firebase-import-seasons.ts",
+    "firebase:import-pts": "tsx scripts/firebase-import-player-team-seasons.ts",
+    "firebase:import-all": "tsx scripts/firebase-import-all.ts",
     "firebase:deploy": "firebase deploy --only firestore:rules,firestore:indexes"
   },
   "dependencies": {

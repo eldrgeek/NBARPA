@@ -1,5 +1,44 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "player_team_seasons",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "player_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "season_id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "player_team_seasons",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "team_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "season_id",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "seasons",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "season_id",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
   "fieldOverrides": []
 }
 

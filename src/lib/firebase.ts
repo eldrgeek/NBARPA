@@ -49,6 +49,9 @@ export const db = getFirestore(app);
 // Collection references
 export const collections = {
   players: 'players',
+  teams: 'teams',
+  seasons: 'seasons',
+  playerTeamSeasons: 'player_team_seasons',
   assessments: 'assessments',
   analytics: 'analytics',
   adminLogs: 'admin_logs'
@@ -96,6 +99,33 @@ export interface AdminLog {
   timestamp: any;
   user: string;
   details?: any;
+}
+
+export interface Team {
+  team_id: number;
+  team_name: string;
+  abbreviation: string;
+  location: string;
+}
+
+export interface Season {
+  season_id: number;
+  season_label: string;
+  start_year: number;
+  end_year: number;
+}
+
+export interface PlayerTeamSeason {
+  id?: string;
+  player_id: string;
+  team_id: number;
+  season_id: number;
+  games_played: number;
+  // Denormalized fields
+  player_name: string;
+  team_abbr: string;
+  team_name: string;
+  season_label: string;
 }
 
 // Player functions
@@ -332,6 +362,167 @@ export async function getAdminLogs(limitCount: number = 50): Promise<AdminLog[]>
   } catch (error) {
     console.error('Error getting admin logs:', error);
     return [];
+  }
+}
+
+// Team functions
+export async function getAllTeams(): Promise<Team[]> {
+  try {
+    const teamsRef = collection(db, collections.teams);
+    const snapshot = await getDocs(teamsRef);
+    return snapshot.docs.map(doc => doc.data() as Team);
+  } catch (error) {
+    console.error('Error getting all teams:', error);
+    return [];
+  }
+}
+
+export async function getTeamById(teamId: number): Promise<Team | null> {
+  try {
+    const teamDoc = await getDoc(doc(db, collections.teams, teamId.toString()));
+    if (teamDoc.exists()) {
+      return teamDoc.data() as Team;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error getting team:', error);
+    return null;
+  }
+}
+
+export async function getTeamByAbbreviation(abbr: string): Promise<Team | null> {
+  try {
+    const teamsRef = collection(db, collections.teams);
+    const q = query(teamsRef, where('abbreviation', '==', abbr), limit(1));
+    const snapshot = await getDocs(q);
+    
+    if (!snapshot.empty) {
+      return snapshot.docs[0].data() as Team;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error getting team by abbreviation:', error);
+    return null;
+  }
+}
+
+// Season functions
+export async function getAllSeasons(): Promise<Season[]> {
+  try {
+    const seasonsRef = collection(db, collections.seasons);
+    const q = query(seasonsRef, orderBy('season_id', 'asc'));
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => doc.data() as Season);
+  } catch (error) {
+    console.error('Error getting all seasons:', error);
+    return [];
+  }
+}
+
+export async function getSeasonById(seasonId: number): Promise<Season | null> {
+  try {
+    const seasonDoc = await getDoc(doc(db, collections.seasons, seasonId.toString()));
+    if (seasonDoc.exists()) {
+      return seasonDoc.data() as Season;
+    }
+    return null;
+  } catch (error) {
+    console.error('Error getting season:', error);
+    return null;
+  }
+}
+
+// Player-Team-Season functions
+export async function getPlayerCareer(playerId: string): Promise<PlayerTeamSeason[]> {
+  try {
+    const ptsRef = collection(db, collections.playerTeamSeasons);
+    const q = query(
+      ptsRef,
+      where('player_id', '==', playerId),
+      orderBy('season_id', 'asc')
+    );
+    
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    } as PlayerTeamSeason));
+  } catch (error) {
+    console.error('Error getting player career:', error);
+    return [];
+  }
+}
+
+export async function getTeamRoster(teamId: number, seasonId: number): Promise<PlayerTeamSeason[]> {
+  try {
+    const ptsRef = collection(db, collections.playerTeamSeasons);
+    const q = query(
+      ptsRef,
+      where('team_id', '==', teamId),
+      where('season_id', '==', seasonId)
+    );
+    
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    } as PlayerTeamSeason));
+  } catch (error) {
+    console.error('Error getting team roster:', error);
+    return [];
+  }
+}
+
+export async function getPlayersByTeam(teamAbbr: string): Promise<string[]> {
+  try {
+    const ptsRef = collection(db, collections.playerTeamSeasons);
+    const q = query(ptsRef, where('team_abbr', '==', teamAbbr));
+    
+    const snapshot = await getDocs(q);
+    
+    // Get unique player IDs
+    const uniquePlayers = new Set<string>();
+    snapshot.docs.forEach(doc => {
+      uniquePlayers.add(doc.data().player_name);
+    });
+    
+    return Array.from(uniquePlayers).sort();
+  } catch (error) {
+    console.error('Error getting players by team:', error);
+    return [];
+  }
+}
+
+export async function getSeasonStats(seasonId: number): Promise<{
+  totalPlayers: number;
+  totalGames: number;
+  teams: number;
+}> {
+  try {
+    const ptsRef = collection(db, collections.playerTeamSeasons);
+    const q = query(ptsRef, where('season_id', '==', seasonId));
+    
+    const snapshot = await getDocs(q);
+    
+    const uniquePlayers = new Set<string>();
+    const uniqueTeams = new Set<number>();
+    let totalGames = 0;
+    
+    snapshot.docs.forEach(doc => {
+      const data = doc.data();
+      uniquePlayers.add(data.player_id);
+      uniqueTeams.add(data.team_id);
+      totalGames += data.games_played || 0;
+    });
+    
+    return {
+      totalPlayers: uniquePlayers.size,
+      totalGames,
+      teams: uniqueTeams.size
+    };
+  } catch (error) {
+    console.error('Error getting season stats:', error);
+    return { totalPlayers: 0, totalGames: 0, teams: 0 };
   }
 }
 
