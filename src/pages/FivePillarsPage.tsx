@@ -319,6 +319,106 @@ export const FivePillarsPage: React.FC = () => {
             </div>
           </motion.div>
 
+          {/* NBRPA Resources */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+            className="mt-12 bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20"
+          >
+            <h3 className="text-2xl font-semibold text-white mb-6 text-center">
+              Access Official NBRPA Programs
+            </h3>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div>
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <Heart className="w-5 h-5 text-red-400" />
+                  Health & Wellness
+                </h4>
+                <ul className="space-y-2">
+                  <li>
+                    <a
+                      href="https://legendsofbasketball.com/contact/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/70 hover:text-white text-sm flex items-center gap-1 transition-colors"
+                    >
+                      Health Programs <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://legendsofbasketball.com/who-we-are/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/70 hover:text-white text-sm flex items-center gap-1 transition-colors"
+                    >
+                      About NBRPA <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <DollarSign className="w-5 h-5 text-green-400" />
+                  Financial Support
+                </h4>
+                <ul className="space-y-2">
+                  <li>
+                    <a
+                      href="https://legendsofbasketball.com/contact/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/70 hover:text-white text-sm flex items-center gap-1 transition-colors"
+                    >
+                      Financial Assistance <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://legendsofbasketball.com/membership/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/70 hover:text-white text-sm flex items-center gap-1 transition-colors"
+                    >
+                      Membership Benefits <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="text-white font-semibold mb-3 flex items-center gap-2">
+                  <Users className="w-5 h-5 text-blue-400" />
+                  Membership & Events
+                </h4>
+                <ul className="space-y-2">
+                  <li>
+                    <a
+                      href="https://www.legendsofbasketball.com/join"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/70 hover:text-white text-sm flex items-center gap-1 transition-colors"
+                    >
+                      Join NBRPA <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.legendsofbasketball.com/events/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white/70 hover:text-white text-sm flex items-center gap-1 transition-colors"
+                    >
+                      NBRPA Events <ExternalLink className="w-3 h-3" />
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </motion.div>
+
           {/* Footer with Association Link */}
           <motion.div
             initial={{ opacity: 0 }}

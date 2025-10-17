@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { DollarSign, Home, ArrowLeft, TrendingUp, Shield, BookOpen, AlertTriangle } from 'lucide-react';
+import { DollarSign, Home, ArrowLeft, TrendingUp, Shield, BookOpen, AlertTriangle, ExternalLink, GraduationCap, HandHeart } from 'lucide-react';
 import { PillarImageCard } from '../components/PillarImageCard';
 import { PillarExplorationModal } from '../components/PillarExplorationModal';
 import { usePillarProgressContext } from '../contexts/PillarProgressContext';
@@ -317,6 +317,102 @@ export const PillarFinancePage: React.FC = () => {
                   <li>• Financial education for family members</li>
                 </ul>
               </div>
+            </div>
+          </motion.div>
+
+          {/* NBRPA Financial Resources */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-12"
+          >
+            <h2 className="text-2xl font-semibold text-white mb-6 text-center">
+              Official NBRPA Financial Support Programs
+            </h2>
+            <p className="text-white/70 text-center mb-6">
+              Access financial assistance, scholarships, and support through the National Basketball Retired Players Association
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <a
+                href="https://legendsofbasketball.com/contact/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <HandHeart className="w-6 h-6 text-red-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
+                      Emergency Assistance
+                      <ExternalLink className="w-3 h-3" />
+                    </h3>
+                    <p className="text-white/70 text-xs">
+                      Contact NBRPA about grant programs for crisis support
+                    </p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="https://legendsofbasketball.com/contact/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <GraduationCap className="w-6 h-6 text-blue-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
+                      Education Scholarships
+                      <ExternalLink className="w-3 h-3" />
+                    </h3>
+                    <p className="text-white/70 text-xs">
+                      Inquire about continuing education scholarship programs
+                    </p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="https://legendsofbasketball.com/contact/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <GraduationCap className="w-6 h-6 text-purple-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
+                      Family Scholarships
+                      <ExternalLink className="w-3 h-3" />
+                    </h3>
+                    <p className="text-white/70 text-xs">
+                      Learn about education support for player families
+                    </p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="https://legendsofbasketball.com/membership/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <DollarSign className="w-6 h-6 text-green-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
+                      Member Benefits
+                      <ExternalLink className="w-3 h-3" />
+                    </h3>
+                    <p className="text-white/70 text-xs">
+                      Explore NBRPA membership and financial resources
+                    </p>
+                  </div>
+                </div>
+              </a>
             </div>
           </motion.div>
 

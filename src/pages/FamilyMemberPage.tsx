@@ -62,6 +62,26 @@ Available for domestic concerns, mental health emergencies, substance abuse issu
 
 ---
 
+## NBRPA Resources for Families
+
+### Financial Support & Education
+- [Contact NBRPA About Family Scholarships](https://legendsofbasketball.com/contact/)
+- [Learn About Member Benefits](https://legendsofbasketball.com/membership/)
+
+### Health & Wellness
+- [Contact NBRPA About Health Support](https://legendsofbasketball.com/contact/)
+- [About NBRPA Programs](https://legendsofbasketball.com/who-we-are/)
+
+### Community & Events
+- [NBRPA Events](https://www.legendsofbasketball.com/events/)
+- [Legends Care Programs](https://legendsofbasketball.com/legends-care/)
+
+### Contact & Support
+- [Get in Touch with NBRPA](https://legendsofbasketball.com/contact/)
+- [Learn About NBRPA](https://legendsofbasketball.com/who-we-are/)
+
+---
+
 *"Behind every player is a family navigating this journey too. Your dreams, struggles, and successes matter just as much."*
 
 You are not just a "player's family"—you are individuals with your own dreams, goals, and needs. We're here to support YOU.`;

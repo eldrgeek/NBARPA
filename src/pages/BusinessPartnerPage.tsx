@@ -76,6 +76,22 @@ Transform your business with the power of NBA talent. Contact us today to explor
 
 ---
 
+## Partnership Resources
+
+### Explore Partnership Opportunities
+- [NBRPA Sponsorship Opportunities](https://legendsofbasketball.com/partners/sponsorship-opportunities/)
+- [Learn About NBRPA Partners](https://legendsofbasketball.com/partners/)
+- [Contact Partnership Team](https://legendsofbasketball.com/contact/)
+
+### Connect With Players
+- [Learn About NBRPA Membership](https://legendsofbasketball.com/membership/)
+- [NBRPA Events](https://www.legendsofbasketball.com/events/)
+
+### Contact Us
+- [Get in Touch with NBRPA](https://legendsofbasketball.com/contact/)
+
+---
+
 **Learn more about the NBA Retired Players Association at [LegendsofBasketball.com](https://legendsofbasketball.com)**`;
 
 export const BusinessPartnerPage: React.FC = () => {

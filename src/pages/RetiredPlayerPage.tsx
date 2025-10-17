@@ -82,6 +82,30 @@ The game gave you a platform. Now use it to build something lasting.
 
 ---
 
+## Access NBRPA Resources
+
+### Health & Wellness
+- [Contact NBRPA About Health Programs](https://legendsofbasketball.com/contact/)
+- [Learn About NBRPA](https://legendsofbasketball.com/who-we-are/)
+- [Membership Benefits](https://legendsofbasketball.com/membership/)
+
+### Financial Support
+- [Contact NBRPA About Financial Assistance](https://legendsofbasketball.com/contact/)
+- [Learn About Member Benefits](https://legendsofbasketball.com/membership/)
+- [About NBRPA Programs](https://legendsofbasketball.com/who-we-are/)
+
+### Community & Events
+- [Legends Care Community Programs](https://legendsofbasketball.com/legends-care/)
+- [NBRPA Events](https://www.legendsofbasketball.com/events/)
+- [Full Court Press Program](https://legendsofbasketball.com/legends-care/full-court-press/)
+
+### Membership & Resources
+- [Join NBRPA Membership](https://www.legendsofbasketball.com/join)
+- [Member Portal Login](https://www.legendsofbasketball.com/login)
+- [About NBRPA](https://legendsofbasketball.com/who-we-are/)
+
+---
+
 **Learn more about the NBA Retired Players Association at [LegendsofBasketball.com](https://legendsofbasketball.com)**`;
 
 export const RetiredPlayerPage: React.FC = () => {

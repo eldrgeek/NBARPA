@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Home, ArrowLeft, Shield, Activity, Brain, Stethoscope } from 'lucide-react';
+import { Heart, Home, ArrowLeft, Shield, Activity, Brain, Stethoscope, ExternalLink } from 'lucide-react';
 import { PillarImageCard } from '../components/PillarImageCard';
 import { PillarExplorationModal } from '../components/PillarExplorationModal';
 import { usePillarProgressContext } from '../contexts/PillarProgressContext';
@@ -228,6 +228,82 @@ export const PillarHealthPage: React.FC = () => {
                   <li>• Healthcare planning for dependents</li>
                 </ul>
               </div>
+            </div>
+          </motion.div>
+
+          {/* NBRPA Resources */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-12"
+          >
+            <h2 className="text-2xl font-semibold text-white mb-6 text-center">
+              Official NBRPA Health & Wellness Programs
+            </h2>
+            <p className="text-white/70 text-center mb-6">
+              Access comprehensive health resources and support through the National Basketball Retired Players Association
+            </p>
+            <div className="grid md:grid-cols-3 gap-4">
+              <a
+                href="https://legendsofbasketball.com/contact/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <Brain className="w-6 h-6 text-purple-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      Mental Health Support
+                      <ExternalLink className="w-4 h-4" />
+                    </h3>
+                    <p className="text-white/70 text-sm">
+                      Contact NBRPA for mental health resources and support programs
+                    </p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="https://legendsofbasketball.com/contact/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <Shield className="w-6 h-6 text-blue-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      Health Insurance
+                      <ExternalLink className="w-4 h-4" />
+                    </h3>
+                    <p className="text-white/70 text-sm">
+                      Contact NBRPA to learn about health insurance options and coverage
+                    </p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="https://legendsofbasketball.com/who-we-are/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <Heart className="w-6 h-6 text-red-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2">
+                      About NBRPA
+                      <ExternalLink className="w-4 h-4" />
+                    </h3>
+                    <p className="text-white/70 text-sm">
+                      Learn more about NBRPA and available health programs
+                    </p>
+                  </div>
+                </div>
+              </a>
             </div>
           </motion.div>
 

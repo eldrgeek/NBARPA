@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Users, Home, ArrowLeft, GraduationCap, Building, Heart, Zap } from 'lucide-react';
+import { Users, Home, ArrowLeft, GraduationCap, Building, Heart, Zap, ExternalLink, Handshake, Award } from 'lucide-react';
 import { PillarImageCard } from '../components/PillarImageCard';
 import { PillarExplorationModal } from '../components/PillarExplorationModal';
 import { usePillarProgressContext } from '../contexts/PillarProgressContext';
@@ -318,6 +318,102 @@ export const PillarCommunityPage: React.FC = () => {
                   <li>• Educational initiatives participation</li>
                 </ul>
               </div>
+            </div>
+          </motion.div>
+
+          {/* NBRPA Community Programs */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.9 }}
+            className="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20 mb-12"
+          >
+            <h2 className="text-2xl font-semibold text-white mb-6 text-center">
+              Official NBRPA Community Programs
+            </h2>
+            <p className="text-white/70 text-center mb-6">
+              Join official NBRPA Legends Care initiatives making a difference in communities nationwide
+            </p>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <a
+                href="https://legendsofbasketball.com/legends-care/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <Heart className="w-6 h-6 text-red-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
+                      Legends Care
+                      <ExternalLink className="w-3 h-3" />
+                    </h3>
+                    <p className="text-white/70 text-xs">
+                      Official NBRPA community programs
+                    </p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="https://legendsofbasketball.com/legends-care/full-court-press/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <Zap className="w-6 h-6 text-orange-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
+                      Full Court Press
+                      <ExternalLink className="w-3 h-3" />
+                    </h3>
+                    <p className="text-white/70 text-xs">
+                      Youth basketball and mentorship initiative
+                    </p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="https://legendsofbasketball.com/contact/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <Award className="w-6 h-6 text-purple-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
+                      Educational Support
+                      <ExternalLink className="w-3 h-3" />
+                    </h3>
+                    <p className="text-white/70 text-xs">
+                      Contact NBRPA about educational programs
+                    </p>
+                  </div>
+                </div>
+              </a>
+
+              <a
+                href="https://legendsofbasketball.com/legends-care/donate-now/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-white/10 hover:bg-white/15 rounded-xl p-6 transition-all border border-white/20 hover:border-white/30"
+              >
+                <div className="flex items-start gap-3">
+                  <Handshake className="w-6 h-6 text-green-300 flex-shrink-0 mt-1" />
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-2 flex items-center gap-2 text-sm">
+                      Support Programs
+                      <ExternalLink className="w-3 h-3" />
+                    </h3>
+                    <p className="text-white/70 text-xs">
+                      Donate to NBRPA community programs
+                    </p>
+                  </div>
+                </div>
+              </a>
             </div>
           </motion.div>
 

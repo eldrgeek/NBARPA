@@ -54,6 +54,22 @@ Start your transition planning today while you have the power, platform, and res
 
 ---
 
+## NBRPA Resources for Active Players
+
+### Financial Planning & Education
+- [Contact NBRPA About Financial Programs](https://legendsofbasketball.com/contact/)
+- [Learn About NBRPA Membership](https://legendsofbasketball.com/membership/)
+
+### Health & Wellness
+- [Contact NBRPA About Health Resources](https://legendsofbasketball.com/contact/)
+- [About NBRPA Programs](https://legendsofbasketball.com/who-we-are/)
+
+### Membership & Community
+- [Join NBRPA Membership](https://www.legendsofbasketball.com/join)
+- [NBRPA Events](https://www.legendsofbasketball.com/events/)
+
+---
+
 **Learn more about the NBA Retired Players Association at [LegendsofBasketball.com](https://legendsofbasketball.com)**`;
 
 export const ActivePlayerPage: React.FC = () => {
